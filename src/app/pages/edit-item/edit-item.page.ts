@@ -21,7 +21,7 @@ export class EditItemPage implements OnInit {
   };
 
   id: any;
-  itemForm: FormGroup;
+  updatForm: FormGroup;
 
   selectedFile: File = null;
   upLoadedFile: any;
@@ -35,19 +35,21 @@ export class EditItemPage implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.itemService.getItem(this.id).subscribe(res => {
-      this.item = res;
-      this.itemForm.controls['name'].setValue(this.item.name);
-      this.itemForm.controls['imgUrl'].setValue(this.item.imgUrl);
-      this.itemForm.controls['price'].setValue(this.item.price);
-      this.itemForm.controls['description'].setValue(this.item.description);
-    });
+    if(this.id){
+      this.itemService.getItem(this.id).subscribe(res => {
+        this.item = res;
+        this.updatForm.controls['name'].setValue(this.item.name);
+        this.updatForm.controls['imgUrl'].setValue(this.item.imgUrl);
+        this.updatForm.controls['price'].setValue(this.item.price);
+        this.updatForm.controls['description'].setValue(this.item.description);
+      });
+    }
 
     this.loadUpdateProduct();
   }
 
   loadUpdateProduct(){
-    this.itemForm = this.fb.group({
+    this.updatForm = this.fb.group({
       name: ['', Validators.required],
       imgUrl: ['', Validators.required],
       price: ['', Validators.required],
@@ -65,16 +67,16 @@ export class EditItemPage implements OnInit {
     reader.onloadend = (e) => {
       console.log(e.target);
       this.upLoadedFile = reader.result;
-      this.itemForm.get('imgUrl').setValue(this.upLoadedFile);
+      this.updatForm.get('imgUrl').setValue(this.upLoadedFile);
       //console.log(this.upLoadedFile);
     };
   }
 
   update_Product(){
-    if(this.itemForm.valid){
-      this.itemService.updateItem(this.itemForm.value).then(() => {
+    if(this.updatForm.valid){
+      this.itemService.updateItem(this.updatForm.value).then(() => {
         this.router.navigateByUrl('')
-        console.log(this.itemForm.value)
+        console.log(this.updatForm.value)
       })
     }
   }
