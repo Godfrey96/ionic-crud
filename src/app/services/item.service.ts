@@ -42,7 +42,6 @@ export class ItemService {
 
   addItem(item: Item): Promise<DocumentReference> {
     return this.collectionName.add(item);
-  //  this.cartItemCount.next(this.cartItemCount.value + 1)
   }
 
   updateItem(item: Item): Promise<void> {

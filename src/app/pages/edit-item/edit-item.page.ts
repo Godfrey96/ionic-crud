@@ -75,7 +75,7 @@ export class EditItemPage implements OnInit {
   update_Product(){
     if(this.updatForm.valid){
       this.itemService.updateItem(this.updatForm.value).then(() => {
-        this.router.navigateByUrl('')
+        this.router.navigate([''])
         console.log(this.updatForm.value)
       })
     }
